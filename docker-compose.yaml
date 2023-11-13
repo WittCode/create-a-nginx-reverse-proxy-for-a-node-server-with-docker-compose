@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+    server:
+      image: server
+      build:
+        context: ./server
+        dockerfile: Dockerfile
+      container_name: ${SERVER_HOST}
+      env_file: .env
+      ports:
+        - ${SERVER_PORT}:${SERVER_PORT}
+    nginx:
+      image: reverse-proxy
+      restart: always
+      build: 
+        context: ./nginx
+        dockerfile: Dockerfile
+      container_name: ${NGINX_HOST}
+      env_file: .env
+      ports:
+          - ${NGINX_PORT}:${NGINX_PORT}
